@@ -1,0 +1,58 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	  xmlns="http://www.w3.org/1999/xhtml"
+ 	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:o="http://omnifaces.org/ui">
+	  
+	  <ui:define name="titulo">Cadastro Pesquisa</ui:define>
+	  
+	  <ui:define name="corpo">
+	  	<f:metadata>
+	  		<o:viewParam name="pesquisa" value="#{cadastroPesquisaBean.pesquisa}" />
+	  	</f:metadata>
+	  	<h1>Novo Pesquisa</h1>
+	  	<h:form id="frmCadastro">
+	  		<p:messages id="messages" autoUpdate="true" closable="true" />
+	  		<p:toolbar style="margin-top: 20px">
+	  			<p:toolbarGroup>
+	  				<p:commandButton value="Salvar" id="botaoSalvar"
+	  				action="#{cadastroPesquisaBean.salvar}" update="frmCadastro"/>
+	  			</p:toolbarGroup>
+	  			<p:toolbarGroup align="right">
+	  				<p:button value="Pesquisa" outcome="/pesquisa/PesquisaPesquisa.xhtml"/>
+	  			</p:toolbarGroup>
+	  		</p:toolbar>
+	  		<p:panelGrid columns="2" style="width: 100%; margin-top: 20px"
+	  				columnClasses="rotulo, campo">
+	  			<p:outputLabel value="Código" for="codigo"/>
+	  			<p:inputText id="codigo" size="20" maxlength="20"
+	  				value="#{cadastroPesquisaBean.pesquisa.codigo}" readonly="true"/>
+	  				
+	  				<p:outputLabel value="Título Pesquisa" for="nome"/>
+	  			<p:inputText id="nome" size="60" maxlength="80"
+	  				value="#{cadastroPesquisaBean.pesquisa.nome}"/>
+	  				
+	  				<p:outputLabel value="Nome Orientador" for="orientador"/>
+	  			<p:inputText id="orientador" size="60" maxlength="80"
+	  				value="#{cadastroPesquisaBean.pesquisa.orientador}"/>
+	  				
+	  				<p:outputLabel value="Aluno" for="aluno"/>
+	    		<p:selectOneMenu id="aluno" value="#{cadastroPesquisaBean.pesquisa.aluno}">
+	    			<f:selectItem itemLabel="Selecione o aluno pesquisador" />
+	    			<f:selectItems value="#{cadastroPesquisaBean.alunos}" var="aluno" 
+						itemLabel="#{aluno.nome}" itemValue="#{aluno}"/>
+	    		</p:selectOneMenu>
+	    		<p:outputLabel value="Tipo" for="tipo"/>
+	    		<p:selectOneMenu id="tipo" value="#{cadastroPesquisaBean.pesquisa.tipo}">
+	    			<f:selectItem itemLabel="Selecione tipo" />
+	    			<f:selectItems value="#{cadastroPesquisaBean.tipos}" var="tipo" 
+						itemLabel="#{tipo}" itemValue="#{tipo}"/>
+	    		</p:selectOneMenu>
+	  				
+	  			
+	  		</p:panelGrid>
+	  	</h:form>
+	  </ui:define>
+</ui:composition>

@@ -1,0 +1,66 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	  xmlns="http://www.w3.org/1999/xhtml"
+ 	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui="http://java.sun.com/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
+	  
+	  <ui:define name="titulo">Pesquisar Pesquisas Em Desenvolvimento</ui:define>
+	  
+	  <ui:define name="corpo">
+	  <h1>Listagem Pesquisas</h1>
+	  <h:form id="frmPesquisa">
+	  		<p:messages id="messages" autoUpdate="true" closable="true"/>
+	  		<p:toolbar style="margin-top: 20px">
+	  			<p:toolbarGroup>
+	  				<p:commandButton value="Novo" id="botaoNovo"
+	  					action="/pesquisa/CadastroPesquisa.xhtml"/>
+	  			</p:toolbarGroup>
+	  		</p:toolbar>
+	  		<p:dataTable id="pesquisasTable" value="#{pesquisaPesquisaBean.pesquisas}"
+	  			var="pesquisa"
+	  			style="margin-top:20px" emptyMessage="Nenhuma pesquisa encontrada." rows="20"
+	  			paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+	  			<p:column headerText="Código" style="text-align: center; width: 100px">
+	  				<h:outputText value="#{pesquisa.codigo}"/>
+	  			</p:column>
+	  			<p:column headerText="Título da Pesquisa" style="text-align: center; width: 100px">
+	  				<h:outputText value="#{pesquisa.nome}"/>
+	  			</p:column>
+	  			<!-- <p:outputLabel value="Título Pesquisa" for="nome"/>
+	  			<p:inputText id="nome" size="60" maxlength="80"
+	  				value="#{cadastroPesquisaBean.pesquisa.nome}"/>
+	  			
+	  				<p:outputLabel value="Nome Orientador" for="orientador"/>
+	  			<p:inputText id="orientador" size="60" maxlength="80"
+	  				value="#{cadastroPesquisaBean.pesquisa.orientador}"/> -->
+	  				
+	  			<p:column headerText="Nome do Orientador" style="text-align: center; width: 100px">
+	  				<h:outputText value="#{pesquisa.orientador}"/>
+	  			</p:column>	
+	  			<p:column headerText="Aluno Pesquisador" style="text-align: center; width: 100px">
+	  				<h:outputText value="#{pesquisa.aluno.nome}"/>
+	  			</p:column>	
+	  			<p:column style="text-align: center; width: 100px">
+	  				<p:button outcome="CadastroPesquisa" icon="ui-icon-pencil" title="Editar">
+	  					<f:param name="pesquisa" value="#{pesquisa.codigo}"/>
+	  				</p:button>
+	  				<p:commandButton icon="ui-icon-trash" title="Excluir"
+	  					oncomplete="confirmacaoExclusao.show()"
+	  					process="@this" update=":frmPesquisa:confirmacaoExclusaoDialog">
+	  					<f:setPropertyActionListener 
+	  						target="#{pesquisaPesquisaBean.pesquisaSelecionado}"
+	  						value="#{pesquisa}"/>
+	  				</p:commandButton>
+	  			</p:column>
+	  		</p:dataTable>
+	  		<p:confirmDialog id="confirmacaoExclusaoDialog" widgetVar="confirmacaoExclusao"
+	  		message="Tem certeza que deseja excluir a pesquisa #{pesquisaPesquisaBean.pesquisaSelecionado.nome}?"
+	  		header="Exclusão de Pesquisa" severity="alert">
+	  			<p:button value="Não" onclick="confirmacaoExclusao.hide(); return false;" />
+	  			<p:commandButton value="Sim" update=":frmPesquisa:pesquisasTable"
+	  				onclick="confirmacaoExclusao.hide()" action="#{pesquisaPesquisaBean.excluir}"/>
+	  		</p:confirmDialog>
+	  </h:form>
+	  </ui:define>
+</ui:composition>

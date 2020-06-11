@@ -1,0 +1,43 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"	
+	xmlns:f="http://java.sun.com/jsf/core"		
+	xmlns:ui="http://java.sun.com/jsf/facelets"	
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui">
+	
+	<ui:define name="titulo">Novo Responsável pela pesquisa</ui:define>
+	
+	<ui:define name="corpo">
+		<f:metadata>
+		<o:viewParam name="responsavelPesquisa" value="#{cadastroResponsavelPesquisaBean.responsavelPesquisa}"/>
+		</f:metadata>
+	
+	
+	<h1>Responsável pela Pesquisa</h1>
+	
+	<h:form id="frmCadastro">
+		<p:messages id="messages" autoUpdate="true" closable="true"/>
+		
+		<p:toolbar style="margin-top:20px">
+			<p:toolbarGroup>
+				<p:commandButton value="Salvar" id="botaoSalvar"
+				action="#{cadastroResponsavelPesquisaBean.salvar}" update="frmCadastro"/>
+			</p:toolbarGroup>
+	  		<p:toolbarGroup align="right">
+				<p:button value="Pesquisa" outcome="/responsavelPesquisa/PesquisaResponsavelPesquisa.xhtml"/>
+			</p:toolbarGroup>
+		</p:toolbar>
+		
+		<p:panelGrid columns="2" id="painel" style="width:100%; margin-top: 20px" 
+				columnClasses="rotulo, campo">
+			
+			
+			<p:outputLabel value="Nome Completo" for="nome"/>
+			<p:inputText id="nome" size="30" maxlength="80"
+			value="#{cadastroResponsavelPesquisaBean.responsavelPesquisa.nomeCompleto}"/>
+
+			</p:panelGrid>
+			</h:form>
+	</ui:define>
+</ui:composition>

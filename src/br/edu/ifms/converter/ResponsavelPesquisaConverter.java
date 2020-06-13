@@ -9,7 +9,7 @@ import br.edu.ifms.dao.ResponsavelPesquisaDAO;
 import br.edu.ifms.modelo.ResponsavelPesquisa;
 import br.edu.ifms.util.cdi.CDIServiceLocator;
 
-@FacesConverter(forClass=ResponsavelPesquisa.class)
+@FacesConverter("ResponsavelPesquisaConverter")
 public class ResponsavelPesquisaConverter implements Converter {
 	
 	private ResponsavelPesquisaDAO responsavelPesquisaDAO;

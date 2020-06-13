@@ -1,0 +1,58 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">Cadastrar Pesquisa Concluida</ui:define>
+    
+    <ui:define name="corpo">
+    	<f:metadata>
+			<o:viewParam name="carro" value="#{cadastroConcluidaBean.concluida}" />
+		</f:metadata>
+    
+    	<h1>Novo carro</h1>
+    	
+    	<h:form id="frmCadastro">
+    		<p:messages id="messages" autoUpdate="true" closable="true" />
+    	
+	    	<p:toolbar style="margin-top: 20px">
+	    		<p:toolbarGroup>
+	    			<p:commandButton value="Salvar" id="botaoSalvar" action="#{cadastroConcluidaBean.salvar}" update="frmCadastro"/>
+	    		</p:toolbarGroup>
+	    		<p:toolbarGroup align="right">
+					<p:button value="Pesquisa" outcome="/concluida/PesquisaConcluida.xhtml"/>
+				</p:toolbarGroup>
+	    	</p:toolbar>
+	    	
+			<p:panelGrid columns="2" id="painel" style="width: 100%" columnClasses="rotulo, campo">
+				<p:outputLabel value="Código" for="codigo"/>
+			    <p:inputText id="codigo" size="20" maxlength="20" value="#{cadastroConcluidaBean.concluida.codigo}" readonly="true"/>
+			    
+			    <p:outputLabel value="Pesquisa" for="pesquisa"/>
+	    		<p:selectOneMenu id="pesquisa" value="#{cadastroConcluidaBean.concluida.pesquisa}">
+	    			<f:selectItem itemLabel="Selecione o modelo" />
+	    			<f:selectItems value="#{cadastroConcluidaBean.pesquisas}" var="pesquisas" 
+						itemLabel="#{pesquisas.nome}" itemValue="#{pesquisas}"/>
+	    		</p:selectOneMenu>
+			    
+			    <p:outputLabel value="Resumo da pesquisa" for="resumoPesquisa"/>
+			    <p:inputText id="resumoPesquisa" size="20" maxlength="20" value="#{cadastroConcluidaBean.concluida.resumoPesquisa}"/>
+
+			    <p:outputLabel value="Valor disponivel para inscrições" for="valorDisponivelParaInscricao"/>
+			    <p:inputText id="valorDisponivelParaInscricao" size="20" maxlength="20" value="#{cadastroConcluidaBean.concluida.valorDisponivelParaInscricao}"/>
+			    
+			    <p:outputLabel value="Responsáveis pesquisas" for="responsaveisPesquisas"/>
+				  <p:selectManyCheckbox id="responsaveisPesquisas" styleClass="many-checkbox" 
+						value="#{cadastroConcluidaBean.concluida.responsaveisPesquisas}" converter="ResponsavelPesquisaConverter">
+					<f:attribute name="collectionType" value="java.util.ArrayList"/>
+					<f:selectItems value="#{cadastroConcluidaBean.responsaveisPesquisas}" var="responsavel" 
+						itemLabel="#{responsavel.nomeCompleto}" itemValue="#{responsavel}" />
+				</p:selectManyCheckbox>	
+					    
+			</p:panelGrid>
+    	</h:form>
+    </ui:define>
+</ui:composition>

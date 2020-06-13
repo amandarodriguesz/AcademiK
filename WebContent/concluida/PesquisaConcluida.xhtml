@@ -1,0 +1,74 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Pesquisas Concluidas</ui:define>
+    
+    <ui:define name="corpo">
+    	<h1>Pesquisas Concluídas</h1>
+    	
+    	<h:form id="frmPesquisa">
+    		<p:messages id="messages" autoUpdate="true" closable="true" />
+    		
+    		<p:toolbar style="margin-top: 20px">
+    			<p:toolbarGroup>
+    				<p:commandButton value="Novo" id="botaoNovo" action="/concluida/CadastroConcluida.xhtml"/>
+    			</p:toolbarGroup>
+    		</p:toolbar>
+    	
+	    	<p:dataTable id="concluidaTable" value="#{pesquisaConcluidaBean.lazyConcluidas}" var="concluida"
+		    		style="margin-top: 20px" emptyMessage="Nenhuma pesquisa concluida encontrada." rows="5"
+		    		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom"
+		    		lazy="true" rowsPerPageTemplate="5,10,15">
+		    		
+		    		<p:column headerText="Código" style="text-align: center; width: 100px">
+		    			<h:outputText value="#{concluida.codigo}" />
+		    		</p:column>
+		    		<p:column headerText="Pesquisa">
+		    			<h:outputText value="#{concluida.pesquisa.nome}" />
+		    		</p:column>
+		    		<p:column headerText="Resumo Pesquisa">
+		    			<h:outputText value="#{concluida.resumoPesquisa}" />
+		    		</p:column>
+		    		<p:column headerText="Valor disponível para Inscrição ">
+		    			<h:outputText value="#{concluida.valorDisponivelParaInscricao}" />
+		    		</p:column>
+		    		<p:column headerText="Responsáveis pela Pesquisa" style="width: 100px; text-align: center">
+		    			<p:commandButton icon="ui-icon-extlink" title="Responsáveis pela Pesquisa" action="#{pesquisaConcluidaBean.buscarConcluidaComResponsaveis}"
+		    					process="@this" oncomplete="mostraAcessorios.show()" update=":frmPesquisa:mostraAcessoriosDialog">
+		    				<f:setPropertyActionListener target="#{pesquisaConcluidaBean.concluidaSelecionada}" value="#{concluida}" />
+		    			</p:commandButton>
+		    		</p:column>
+		    		<p:column style="width: 100px; text-align: center">
+		    			<p:button outcome="CadastroConcluida" icon="ui-icon-pencil" title="Editar">
+		    				<f:param name="concluida" value="#{concluida.codigo}"/>
+		    			</p:button>
+		    			<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmacaoExclusao.show()"
+								process="@this" update=":frmPesquisa:confirmacaoExclusaoDialog">
+							<f:setPropertyActionListener target="#{pesquisaConcluidaBean.concluidaSelecionada}" value="#{concluida}" />
+						</p:commandButton>
+		    		</p:column>
+		    </p:dataTable>
+		   
+		    <p:confirmDialog id="confirmacaoExclusaoDialog" widgetVar="confirmacaoExclusao"
+	        		message="Tem certeza que deseja excluir a conclusão da pesquisa #{pesquisaConcluidaBean.concluidaSelecionada.resumoPesquisa}?"  
+	                header="Exclusão de registro" severity="alert">
+	        	<p:button value="Não" onclick="confirmacaoExclusao.hide(); return false;" />
+	        	<p:commandButton value="Sim" update=":frmPesquisa:concluidaTable"
+	        			onclick="confirmacaoExclusao.hide()" action="#{pesquisaConcluidaBean.excluir}" />
+	    	</p:confirmDialog>
+	    	
+	    	<p:dialog id="mostraAcessoriosDialog" header="Responsáveis Pesquisa" widgetVar="mostraAcessorios" modal="true">
+    			<p:dataList value="#{pesquisaConcluidaBean.concluidaSelecionada.responsaveisPesquisas}" var="responsavel" itemType="disc"
+    					rendered="#{not empty pesquisaConcluidaBean.concluidaSelecionada.responsaveisPesquisas}">
+    				#{responsavel.nomeCompleto}
+    			</p:dataList>
+    			 <h:outputText value="Nenhum responsável" rendered="#{empty pesquisaConcluidaBean.concluidaSelecionada.responsaveisPesquisas}"/> 
+			</p:dialog>
+	    	
+	    </h:form>
+    </ui:define>
+</ui:composition>

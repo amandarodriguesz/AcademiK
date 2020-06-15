@@ -42,8 +42,12 @@ xmlns:p="http://primefaces.org/ui"
 					</p:submenu>
 <!-- 					<p:menuitem value="Procedimentos"/>	
 					<p:submenu label="Relatórios">
-						<p:menuitem value="Alunos por Região"/>					
-					</p:submenu>	 -->
+						<p:menuitem value="Alunos por Região"/>	
+							 -->	
+					<p:submenu label="Tipos de Pessoas">
+						<p:menuitem value="Professores" outcome="/professor/PesquisaProfessores.xhtml"/>	
+						<p:menuitem value="Técnicos" outcome="/tecnico/PesquisaTecnicos.xhtml"/>			
+					</p:submenu>
 				</p:menubar>	
 			</h:form>
 		</div>

@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-
 import br.edu.ifms.modelo.RequisitoParticipacao;
 
 public class RequisitoParticipacaoDAO implements Serializable {

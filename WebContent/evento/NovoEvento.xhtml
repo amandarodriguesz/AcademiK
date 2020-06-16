@@ -1,0 +1,67 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:o="http://omnifaces.org/ui">
+
+    <ui:define name="titulo">Novo evento</ui:define>
+    
+    <ui:define name="corpo">
+    	<h1>Novo Evento</h1>
+    	
+    	<h:form id="frmCadastro">
+    		<p:messages id="messages" autoUpdate="true" closable="true" />
+    	
+	    	<p:toolbar style="margin-top: 20px">
+	    		<p:toolbarGroup>
+	    			<p:commandButton value="Salvar" id="botaoSalvar" action="#{novoEventoBean.salvar}" update="frmCadastro"/>
+	    		</p:toolbarGroup>
+	    	</p:toolbar>
+	    	
+	    	<p:panelGrid columns="2" id="painel" style="width: 100%; margin-top: 20px"
+	    			columnClasses="rotulo, campo">
+	    		<p:outputLabel value="Pesquisa Concluida" for="concluida"/>
+	    		<p:selectOneMenu id="concluida" value="#{novoEventoBean.evento.concluida}">
+	    			<f:selectItem itemLabel="Selecione a Pesquisa Concluida" />
+	    			<f:selectItems value="#{novoEventoBean.concluidas}" var="concluida" 
+						itemLabel="#{concluida.pesquisa.nome}: #{concluida.resumoPesquisa}" itemValue="#{concluida}"/>
+	    		</p:selectOneMenu>
+	    		
+	    		<p:outputLabel value="Professor" for="professor"/>
+				<p:selectOneMenu id="professor" value="#{novoEventoBean.evento.professor}">
+					<f:selectItem itemLabel="Selecione o professor" />
+    				<f:selectItems value="#{novoEventoBean.professores}" var="professor" 
+    					itemLabel="#{professor.nome}" itemValue="#{professor}"/>
+				</p:selectOneMenu>
+	    		
+	    		<p:outputLabel value="Data do Inicio Inscricao" for="dataInicioInscricao"/>
+	    		<p:calendar id="dataInicioInscricao" size="20" value="#{novoEventoBean.evento.dataInicioInscricao}" pattern="dd/MM/yyyy HH:mm" stepMinute="10"/>
+	    		
+	    		<p:outputLabel value="Data do Final Inscricao" for="dataTerminoInscricao"/>
+	    		<p:calendar id="dataTerminoInscricao" size="20" value="#{novoEventoBean.evento.dataTerminoInscricao}" pattern="dd/MM/yyyy HH:mm" stepMinute="10"/>
+	    		
+	    		
+	    		<p:outputLabel value="Data do Evento" for="dataEvento"/>
+	    		<p:calendar id="dataEvento" size="20" value="#{novoEventoBean.evento.dataEvento}" pattern="dd/MM/yyyy HH:mm" stepMinute="10"/>
+	    		
+	    		<p:outputLabel value="Valor Inscrição" for="valorInscricao"/>
+	    		<p:inputText id="valorInscricao" size="20" maxlength="80" value="#{novoEventoBean.evento.valorInscricao}"/>
+	    	</p:panelGrid>
+	    	
+	    	<h:outputText value="Dados dos Requisitos para Publicação no Evento" style="font-size: 18px; display: block; margin-top: 20px"/>
+	    	
+	    	<p:panelGrid columns="2" id="requisitoParticipacao" style="width: 100%; margin-top: 20px"
+	    			columnClasses="rotulo, campo">
+		    	<p:outputLabel value="É Obrigatório?" for="obrigatorio"/>
+    			<p:selectBooleanCheckbox id="obrigatorio" value="#{novoEventoBean.evento.requisitoParticipacao.obrigatorio}"/>
+    			
+    			<p:outputLabel value="Descrição" for="descricao"/>
+	    		<p:inputText id="descricao" size="20" maxlength="80" value="#{novoEventoBean.evento.requisitoParticipacao.descricao}"/>
+
+    		</p:panelGrid>
+		    		
+    	</h:form>
+    </ui:define>
+</ui:composition>

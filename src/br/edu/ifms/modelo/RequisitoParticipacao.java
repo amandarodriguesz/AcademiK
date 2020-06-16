@@ -16,7 +16,7 @@ public class RequisitoParticipacao {
 	private boolean obrigatorio;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Long getCodigo() {
 		return codigo;
 	}
@@ -29,10 +29,10 @@ public class RequisitoParticipacao {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-	public boolean isObrigatorio() {
+	public Boolean getObrigatorio() {
 		return obrigatorio;
 	}
-	public void setObrigatorio(boolean obrigatorio) {
+	public void setObrigatorio(Boolean obrigatorio) {
 		this.obrigatorio = obrigatorio;
 	}
 	

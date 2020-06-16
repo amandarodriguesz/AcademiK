@@ -1,0 +1,59 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Pesquisa de Eventos</ui:define>
+    
+    <ui:define name="corpo">
+    	<h1>Pesquisa de eventos</h1>
+    	
+    	<h:form id="frmFiltro">
+    		<p:messages id="messages" autoUpdate="true" closable="true" />
+    		
+    		<p:toolbar style="margin-top: 20px">
+    			<p:toolbarGroup>
+					<p:commandButton value="Pesquisar" id="botaoPesquisa" action="#{pesquisaEventoBean.pesquisar}" update="eventosTable"/>
+				</p:toolbarGroup>
+    		</p:toolbar>
+    		<p:panelGrid columns="2" id="painel" style="width: 100%" columnClasses="rotulo, campo">
+				<p:outputLabel value="Data do evento" for="dataEvento"/>
+	    		<p:calendar id="dataEvento" size="20" value="#{pesquisaEventoBean.evento.dataEvento}" pattern="dd/MM/yyyy"/>
+			</p:panelGrid>
+    		
+    		
+	    	<p:dataTable id="eventosTable" value="#{pesquisaEventoBean.eventos}" var="evento"
+		    		style="margin-top: 20px" emptyMessage="Nenhum evento encontrado." rows="20"
+		    		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+		    		
+		    	<p:column headerText="Código" style="text-align: center; width: 100px">
+	    			<h:outputText value="#{evento.codigo}" />
+	    		</p:column>
+	    		<p:column headerText="Data Evento">
+	    			<h:outputText value="#{evento.dataEvento}">
+	    				<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+	    			</h:outputText>
+	    		</p:column>
+	    		<p:column headerText="Data Inicio Inscrição">
+	    			<h:outputText value="#{evento.dataInicioInscricao.time}">
+	    				<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    			</h:outputText>
+	    		</p:column>
+				<p:column headerText="Data Final Inscrição">
+	    			<h:outputText value="#{evento.dataTerminoInscricao.time}">
+	    				<f:convertDateTime pattern="dd/MM/yyyy"/>
+	    			</h:outputText>
+	    		</p:column>
+	    		<p:column headerText="Valor Inscrição">
+	    			<h:outputText value="#{evento.valorInscricao}" />
+	    		</p:column>
+	    		<p:column headerText="Pesquisa Concluida">
+	    			<h:outputText value="#{evento.concluida.resumoPesquisa} - #{evento.concluida.pesquisa.nome}" />
+	    		</p:column>
+	    		
+		    </p:dataTable>
+		</h:form>
+    </ui:define>
+</ui:composition>
